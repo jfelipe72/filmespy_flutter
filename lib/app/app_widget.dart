@@ -1,15 +1,18 @@
+import 'package:filmespy_flutter/app/screens/home/home_page.dart';
 import 'package:flutter/material.dart';
-import 'package:filmespy_flutter/app/modules/home/home_module.dart';
 
 class AppWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Slidy',
+      title: 'FilmesPY',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        brightness: Brightness.dark,
+        accentColor: Colors.white,
+        accentColorBrightness: Brightness.light,
       ),
-      home: HomeModule(),
+      home: HomePage(),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
