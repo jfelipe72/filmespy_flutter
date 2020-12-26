@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:bloc_pattern/bloc_pattern_test.dart';
 
-import 'package:filmespy_flutter/app/modules/home/home_page.dart';
+import 'package:filmespy_flutter/app/screens/home/home_page.dart';
 
 void main() {
   testWidgets('HomePage has title', (tester) async {
