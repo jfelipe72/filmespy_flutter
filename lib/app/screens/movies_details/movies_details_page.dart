@@ -1,6 +1,5 @@
-import 'package:filmespy_flutter/app/app_module.dart';
 import 'package:filmespy_flutter/app/models/movie_model.dart';
-import 'package:filmespy_flutter/app/screens/movies_favorites/movies_favorites_bloc.dart';
+import 'package:filmespy_flutter/app/screens/movies_details/movies_details_controller.dart';
 import 'package:filmespy_flutter/app/shared/body_background.dart';
 import 'package:filmespy_flutter/app/shared/favorite_button_widget.dart';
 import 'package:flutter/material.dart';
@@ -18,18 +17,7 @@ class MoviesDetailsPage extends StatefulWidget {
 }
 
 class _MoviesDetailsPageState extends State<MoviesDetailsPage> {
-  MoviesFavoritesBloc _moviesFavBloc;
-
-  @override
-  void initState() {
-    _moviesFavBloc = AppModule.to.getBloc<MoviesFavoritesBloc>();
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
+  final moviesDetailsController = MovieDetailscontroller();
 
   @override
   Widget build(BuildContext context) {
@@ -69,12 +57,15 @@ class _MoviesDetailsPageState extends State<MoviesDetailsPage> {
                         Align(
                           alignment: Alignment.centerRight,
                           child: FavoriteButtonWidget(
-                            isFavorite: _moviesFavBloc.isFavorite(movieModel),
+                            isFavorite: moviesDetailsController.favoriteStore
+                                .isFavorite(movieModel),
                             onTap: (bool isFavorite) async {
                               if (isFavorite)
-                                _moviesFavBloc.removeFavMovie(movieModel);
+                                moviesDetailsController.favoriteStore
+                                    .removeFavMovie(movieModel);
                               else
-                                return _moviesFavBloc.addFavMovie(movieModel);
+                                return moviesDetailsController.favoriteStore
+                                    .addFavMovie(movieModel);
 
                               return !isFavorite;
                             },

@@ -1,32 +1,24 @@
-import 'package:filmespy_flutter/app/app_module.dart';
 import 'package:filmespy_flutter/app/models/movie_model.dart';
 import 'package:filmespy_flutter/app/screens/movies_details/movies_details_page.dart';
-import 'package:filmespy_flutter/app/screens/movies_favorites/movies_favorites_bloc.dart';
 import 'package:filmespy_flutter/app/shared/constants.dart';
 import 'package:filmespy_flutter/app/shared/favorite_button_widget.dart';
+import 'package:filmespy_flutter/app/shared/stores/favorite_store/favorite_store.dart';
 import 'package:filmespy_flutter/app/shared/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:progressive_image/progressive_image.dart';
 
 class MovieTile extends StatefulWidget {
   final MovieModel movieModel;
 
-  const MovieTile({
-    @required this.movieModel,
-  });
+  const MovieTile({Key key, this.movieModel}) : super(key: key);
 
   @override
   _MovieTileState createState() => _MovieTileState();
 }
 
 class _MovieTileState extends State<MovieTile> {
-  MoviesFavoritesBloc _moviesFavBloc;
-
-  @override
-  void initState() {
-    _moviesFavBloc = AppModule.to.getBloc<MoviesFavoritesBloc>();
-    super.initState();
-  }
+  final favoriteStore = GetIt.I.get<FavoriteStore>();
 
   @override
   Widget build(BuildContext context) {
@@ -108,12 +100,12 @@ class _MovieTileState extends State<MovieTile> {
             top: 0,
             right: 0,
             child: FavoriteButtonWidget(
-              isFavorite: _moviesFavBloc.isFavorite(movieModel),
+              isFavorite: favoriteStore.isFavorite(movieModel),
               onTap: (bool isFavorite) async {
                 if (isFavorite)
-                  _moviesFavBloc.removeFavMovie(movieModel);
+                  favoriteStore.removeFavMovie(movieModel);
                 else
-                  return _moviesFavBloc.addFavMovie(movieModel);
+                  return favoriteStore.addFavMovie(movieModel);
 
                 return !isFavorite;
               },
